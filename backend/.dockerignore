@@ -1,0 +1,9 @@
+node_modules
+npm-debug.log
+dist
+coverage
+.dev.db
+dev.db
+prisma/dev.db
+*.db
+*.db-journal

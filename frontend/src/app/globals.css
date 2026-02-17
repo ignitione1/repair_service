@@ -1,0 +1,183 @@
+@import "tailwindcss";
+
+:root {
+  --bg: 240 10% 3.9%;
+  --panel: 240 6% 10%;
+  --panel-2: 240 5% 12.5%;
+  --border: 240 4% 18%;
+  --text: 0 0% 98%;
+  --muted: 240 5% 65%;
+  --primary: 217 91% 60%;
+  --primary-2: 217 85% 52%;
+  --danger: 0 72% 58%;
+  --success: 142 70% 45%;
+  --warning: 38 92% 50%;
+}
+
+@theme inline {
+  --color-background: hsl(var(--bg));
+  --color-foreground: hsl(var(--text));
+  --font-sans: var(--font-geist-sans);
+  --font-mono: var(--font-geist-mono);
+}
+
+body {
+  background: hsl(var(--bg));
+  color: hsl(var(--text));
+  font-family: var(--font-sans);
+  line-height: 1.55;
+}
+
+@layer base {
+  :focus-visible {
+    outline: 2px solid hsl(var(--primary));
+    outline-offset: 2px;
+  }
+}
+
+@layer components {
+  .container-page {
+    @apply mx-auto max-w-5xl px-4 py-8 md:px-6;
+  }
+
+  .card {
+    @apply rounded-xl border px-4 py-4 shadow-sm;
+    border-color: hsl(var(--border));
+    background: hsl(var(--panel));
+  }
+
+  .card-subtle {
+    @apply rounded-xl border px-4 py-4;
+    border-color: hsl(var(--border));
+    background: hsl(var(--panel-2));
+  }
+
+  .input {
+    @apply w-full rounded-lg border px-3 py-2 text-sm shadow-sm transition-colors;
+    border-color: hsl(var(--border));
+    background: hsl(var(--panel-2));
+    color: hsl(var(--text));
+  }
+
+  .input::placeholder {
+    color: hsl(var(--muted));
+  }
+
+  .btn {
+    @apply inline-flex items-center justify-center gap-2 rounded-lg px-3 py-2 text-sm font-medium transition-colors disabled:opacity-50;
+  }
+
+  .btn-primary {
+    background: hsl(var(--primary));
+    color: #0b1020;
+  }
+
+  .btn-primary:hover {
+    background: hsl(var(--primary-2));
+  }
+
+  .btn-secondary {
+    @apply border;
+    border-color: hsl(var(--border));
+    background: hsl(var(--panel-2));
+    color: hsl(var(--text));
+  }
+
+  .btn-secondary:hover {
+    background: hsl(var(--panel));
+  }
+
+  .btn-danger {
+    background: hsl(var(--danger));
+    color: #130707;
+  }
+
+  .btn-danger:hover {
+    filter: brightness(1.05);
+  }
+
+  .badge {
+    @apply inline-flex items-center rounded-full border px-2 py-0.5 text-xs font-medium;
+    border-color: hsl(var(--border));
+    background: rgba(255, 255, 255, 0.02);
+  }
+
+  .badge-new {
+    border-color: rgba(56, 189, 248, 0.35);
+    color: rgba(56, 189, 248, 0.95);
+    background: rgba(56, 189, 248, 0.08);
+  }
+
+  .badge-assigned {
+    border-color: rgba(59, 130, 246, 0.35);
+    color: rgba(99, 169, 255, 0.95);
+    background: rgba(59, 130, 246, 0.08);
+  }
+
+  .badge-in_progress {
+    border-color: rgba(245, 158, 11, 0.35);
+    color: rgba(252, 191, 73, 0.95);
+    background: rgba(245, 158, 11, 0.10);
+  }
+
+  .badge-done {
+    border-color: rgba(34, 197, 94, 0.35);
+    color: rgba(134, 239, 172, 0.95);
+    background: rgba(34, 197, 94, 0.10);
+  }
+
+  .badge-canceled {
+    border-color: rgba(239, 68, 68, 0.35);
+    color: rgba(252, 165, 165, 0.95);
+    background: rgba(239, 68, 68, 0.10);
+  }
+
+  .muted {
+    color: hsl(var(--muted));
+  }
+
+  .divider {
+    @apply my-4 h-px w-full;
+    background: hsl(var(--border));
+  }
+
+  .fade-in-up {
+    animation: fadeInUp 180ms ease-out both;
+  }
+
+  .skeleton {
+    @apply relative overflow-hidden rounded-lg;
+    background: rgba(255, 255, 255, 0.04);
+  }
+
+  .skeleton::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    transform: translateX(-100%);
+    background: linear-gradient(
+      90deg,
+      transparent,
+      rgba(255, 255, 255, 0.06),
+      transparent
+    );
+    animation: shimmer 1.2s ease-in-out infinite;
+  }
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(6px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes shimmer {
+  100% {
+    transform: translateX(100%);
+  }
+}

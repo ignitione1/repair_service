@@ -1,0 +1,52 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+}
+
+enum UserRole {
+  dispatcher
+  master
+}
+
+enum RequestStatus {
+  new
+  assigned
+  in_progress
+  done
+  canceled
+}
+
+model User {
+  id           String   @id @default(cuid())
+  name         String   @unique
+  passwordHash String
+  role         UserRole
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+
+  assignedRequests Request[] @relation("AssignedRequests")
+}
+
+model Request {
+  id           String        @id @default(cuid())
+  clientName   String
+  phone        String
+  address      String
+  problemText  String
+  status       RequestStatus @default(new)
+  assignedToId String?
+  createdAt    DateTime      @default(now())
+  updatedAt    DateTime      @updatedAt
+  takenAt      DateTime?
+
+  assignedTo User? @relation("AssignedRequests", fields: [assignedToId], references: [id], onDelete: SetNull)
+
+  @@index([status])
+  @@index([assignedToId])
+}
